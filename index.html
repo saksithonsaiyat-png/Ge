@@ -3,205 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SATHERLON - Luxury Vintage</title>
+    <title>SATHERLON - High Fashion</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Cormorant Garamond (Serif, หรูหรา) & Montserrat (Sans-serif, อ่านง่าย/โมเดิร์น) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         :root {
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Lato', sans-serif;
-            --color-gold: #C5A059;
-            --color-black: #1A1A1A;
-            --color-cream: #F9F8F4;
-            --color-beige: #EBE5D9;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --color-gold: #D4AF37; /* Classic Gold */
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-border: #EAEAEA;
         }
 
         body {
             font-family: var(--font-sans);
-            background-color: var(--color-cream);
+            font-weight: 300; /* ให้เนื้อหาทั่วไปดูบางและแพง */
+            background-color: var(--color-white);
             color: var(--color-black);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.02em;
         }
 
+        /* การจัดการฟอนต์หัวข้อให้โดดเด่น */
         h1, h2, h3, h4, h5, .font-serif {
             font-family: var(--font-serif);
+            font-weight: 700; /* ให้หัวข้อเป็นตัวหนาชัดเจน */
+            letter-spacing: 0.05em;
+        }
+
+        .product-desc {
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.8;
+            color: #555;
         }
 
         /* --- Animations --- */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .animate-enter {
-            animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Button Styling (Luxury feel) */
+        .btn-primary {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border: 1px solid var(--color-black);
+            font-family: var(--font-sans);
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--color-black);
         }
 
         /* Size Selection Animation */
-        @keyframes popScale {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-        }
-
         .size-btn {
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .size-btn:active {
-            transform: scale(0.85);
+            transition: all 0.3s ease;
+            font-family: var(--font-sans);
+            font-weight: 400;
         }
         .size-btn.selected {
-            animation: popScale 0.3s ease-out;
             background-color: var(--color-black);
             color: white;
             border-color: var(--color-black);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: scale(1.05);
         }
 
         /* Add to Cart Animation */
-        .btn-add {
-            transition: transform 0.1s, background-color 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-add:active {
-            transform: scale(0.97);
-        }
+        .btn-add { position: relative; overflow: hidden; }
         .btn-add.added::after {
-            content: "Added";
+            content: "ADDED TO BAG";
             position: absolute;
             inset: 0;
-            background-color: var(--color-gold);
+            background-color: var(--color-black);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            letter-spacing: 0.1em;
+            font-weight: 500;
             animation: fadeIn 0.3s;
         }
 
         /* Swipe Gallery Styles */
-        .gallery-container {
-            position: relative;
-            overflow: hidden;
-            touch-action: pan-y; /* Allow vertical scroll but capture horizontal */
-        }
-        
-        .gallery-track {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            height: 100%;
-            width: 100%;
-        }
+        .gallery-container { position: relative; overflow: hidden; touch-action: pan-y; }
+        .gallery-track { display: flex; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); height: 100%; width: 100%; }
+        .gallery-item { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
-        .gallery-item {
-            min-width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+        .dot { transition: all 0.4s ease; }
+        .dot.active { background-color: var(--color-black); transform: scale(1.5); }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none; /* Prevent image drag interfering with swipe */
-        }
-
-        /* Dots Indicator */
-        .dot {
-            transition: all 0.3s ease;
-        }
-        .dot.active {
-            background-color: var(--color-black);
-            transform: scale(1.3);
-        }
-
-        /* 3D Flip (Storefront) */
+        /* 3D Flip */
         .flip-container { perspective: 1000px; }
-        .flip-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
-            transform-style: preserve-3d;
-        }
+        .flip-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-inner.is-flipped { transform: rotateY(180deg); }
-        .flip-front, .flip-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            top: 0; left: 0;
-        }
+        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; top: 0; left: 0; }
         .flip-back { transform: rotateY(180deg); }
 
         /* Utilities */
-        .btn-primary {
-            background-color: var(--color-black);
-            color: white;
-            border: 1px solid var(--color-black);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        .btn-primary:hover {
-            background-color: white;
-            color: var(--color-black);
-        }
-
-        .nav-link.active { color: var(--color-gold); }
-        .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: var(--color-black); font-weight: 500; }
+        .nav-link.active::after { width: 100%; background-color: var(--color-black); }
         
         .page-section { display: none; }
         .page-section.active { display: block; }
 
+        .input-error { border-color: #ef4444 !important; }
+        .error-msg { color: #ef4444; font-size: 0.7rem; margin-top: 0.5rem; display: none; font-weight: 400; }
+
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: var(--color-gold); border-radius: 3px; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #fafafa; }
+        ::-webkit-scrollbar-thumb { background: #ccc; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
+    <!-- INITIAL WELCOME MODAL -->
+    <div id="welcome-modal" class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="app.closeWelcomeModal()"></div>
+        <div class="bg-white p-8 md:p-12 max-w-lg w-full mx-4 relative z-10 text-center shadow-2xl transform scale-95 transition-transform duration-500" id="welcome-content">
+            <h2 class="font-serif text-3xl md:text-4xl mb-6 tracking-widest uppercase">Satherlon</h2>
+            <div class="w-8 h-[1px] bg-black mx-auto mb-6"></div>
+            
+            <div class="font-sans font-light text-sm text-[#333] space-y-5 text-left leading-relaxed">
+                <p class="text-center italic font-serif text-lg mb-2">Welcome to our digital boutique.</p>
+                <p><strong>ประสบการณ์การช้อปปิ้ง:</strong><br> เว็บไซต์นี้ถูกออกแบบมาเพื่อนำเสนอสินค้าคอลเลกชันพิเศษของเรา ให้คุณสัมผัสรายละเอียดสินค้าได้อย่างใกล้ชิด</p>
+                <p><strong>วิธีการใช้งาน:</strong><br>
+                &bull; คุณต้องทำการ <b>เข้าสู่ระบบ (Login)</b> ก่อนเข้าชมสินค้า<br>
+                &bull; คุณสามารถ <b>ปัดซ้าย-ขวา</b> หรือกดปุ่มหมุนที่รูปสินค้า เพื่อดูด้านหน้าและหลัง<br>
+                &bull; เลือกไซส์ที่ต้องการและกด <b>Add to Cart</b></p>
+                <p class="text-[10px] text-[#888] text-center mt-8 uppercase tracking-widest border-t border-gray-100 pt-4">
+                    *เรามีการใช้คุกกี้เพื่อประสบการณ์การใช้งานที่ดีที่สุดของคุณ
+                </p>
+            </div>
+            
+            <button onclick="app.closeWelcomeModal()" class="mt-8 btn-primary px-8 py-4 text-xs w-full">
+                Enter Boutique
+            </button>
+        </div>
+    </div>
+
     <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-[#F9F8F4]/95 backdrop-blur-md border-b border-[#B4AEA4]/20 transition-all duration-300">
+    <nav id="main-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#EAEAEA] transition-all duration-300 hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
+            <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 cursor-pointer group" onclick="app.showPage('home')">
-                    <h1 class="text-3xl tracking-[0.15em] font-bold text-[#1A1A1A] group-hover:text-[#C5A059] transition-colors duration-500">
-                        SATHERLON
+                    <h1 class="text-2xl md:text-3xl tracking-[0.2em] font-serif text-[#1A1A1A] group-hover:opacity-70 transition-opacity uppercase">
+                        Satherlon
                     </h1>
-                    <p class="text-[10px] tracking-[0.4em] text-[#C5A059] uppercase text-center mt-1 font-sans font-semibold">Luxury Vintage</p>
                 </div>
                 
-                <div class="hidden md:flex space-x-10 text-xs uppercase tracking-[0.2em] text-[#1A1A1A] font-semibold" id="nav-filters">
-                    <button onclick="app.filterCategory('All')" class="nav-link relative py-2 hover:text-[#C5A059] transition-colors after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-[#C5A059] after:bottom-0 after:left-0 after:transition-all hover:after:w-full active">Shop All</button>
-                    <button onclick="app.filterCategory('Hoodie')" class="nav-link relative py-2 hover:text-[#C5A059] transition-colors after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-[#C5A059] after:bottom-0 after:left-0 after:transition-all hover:after:w-full">Hoodies</button>
-                    <button onclick="app.filterCategory('T-Shirt')" class="nav-link relative py-2 hover:text-[#C5A059] transition-colors after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-[#C5A059] after:bottom-0 after:left-0 after:transition-all hover:after:w-full">T-Shirts</button>
+                <div class="hidden md:flex space-x-12 text-[11px] uppercase tracking-[0.2em] text-[#555] font-sans" id="nav-filters">
+                    <button onclick="app.filterCategory('All')" class="nav-link relative py-2 hover:text-[#1A1A1A] transition-colors after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-[#1A1A1A] after:bottom-0 after:left-0 after:transition-all hover:after:w-full active">Shop All</button>
+                    <button onclick="app.filterCategory('Hoodie')" class="nav-link relative py-2 hover:text-[#1A1A1A] transition-colors after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-[#1A1A1A] after:bottom-0 after:left-0 after:transition-all hover:after:w-full">Hoodies</button>
+                    <button onclick="app.filterCategory('T-Shirt')" class="nav-link relative py-2 hover:text-[#1A1A1A] transition-colors after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-[#1A1A1A] after:bottom-0 after:left-0 after:transition-all hover:after:w-full">T-Shirts</button>
                 </div>
 
                 <div class="flex items-center space-x-6 text-[#1A1A1A]">
-                    <button onclick="app.showPage('admin')" id="admin-btn" class="hidden hover:text-[#C5A059] transition-transform hover:scale-110">
-                        <i data-lucide="layout-dashboard" width="20"></i>
+                    <button onclick="app.showPage('admin')" id="admin-btn" class="hidden hover:opacity-50 transition-opacity">
+                        <i data-lucide="layout-dashboard" width="18" stroke-width="1.5"></i>
                     </button>
-                    <button onclick="app.handleAuthClick()" class="hover:text-[#C5A059] flex items-center gap-2 transition-transform hover:scale-110">
-                        <i id="auth-icon" data-lucide="user" width="20"></i>
+                    <button onclick="app.handleAuthClick()" class="hover:opacity-50 flex items-center gap-2 transition-opacity">
+                        <i id="auth-icon" data-lucide="user" width="18" stroke-width="1.5"></i>
                     </button>
-                    <div class="relative cursor-pointer transition-transform hover:scale-110" onclick="app.toggleCart(true)">
-                        <i data-lucide="shopping-bag" width="20"></i>
-                        <span id="cart-count" class="hidden absolute -top-1 -right-2 bg-[#C5A059] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-sans font-bold">0</span>
+                    <div class="relative cursor-pointer hover:opacity-50 transition-opacity" onclick="app.toggleCart(true)">
+                        <i data-lucide="shopping-bag" width="18" stroke-width="1.5"></i>
+                        <span id="cart-count" class="hidden absolute -top-1.5 -right-2 bg-[#1A1A1A] text-white text-[9px] w-4 h-4 flex items-center justify-center font-sans">0</span>
                     </div>
                 </div>
             </div>
@@ -210,114 +196,130 @@
 
     <!-- Cart Drawer -->
     <div id="cart-drawer" class="fixed inset-0 z-[60] flex justify-end pointer-events-none opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-[#1A1A1A]/30 backdrop-blur-sm" onclick="app.toggleCart(false)"></div>
-        <div id="cart-content" class="relative w-full max-w-md bg-white h-full shadow-2xl transform translate-x-full transition-transform duration-300 ease-out flex flex-col pointer-events-auto">
-            <div class="p-6 border-b border-[#EBE5D9] flex justify-between items-center bg-[#F9F8F4]">
-                <h2 class="text-xl font-serif">Your Bag</h2>
-                <button onclick="app.toggleCart(false)" class="hover:rotate-90 transition-transform duration-300"><i data-lucide="x"></i></button>
+        <div class="absolute inset-0 bg-black/20 backdrop-blur-sm" onclick="app.toggleCart(false)"></div>
+        <div id="cart-content" class="relative w-full max-w-md bg-white h-full shadow-2xl transform translate-x-full transition-transform duration-500 ease-out flex flex-col pointer-events-auto border-l border-[#EAEAEA]">
+            <div class="p-8 border-b border-[#EAEAEA] flex justify-between items-center bg-white">
+                <h2 class="text-2xl font-serif uppercase tracking-widest">Shopping Bag</h2>
+                <button onclick="app.toggleCart(false)" class="hover:rotate-90 transition-transform duration-300"><i data-lucide="x" stroke-width="1"></i></button>
             </div>
-            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
-            <div id="cart-footer" class="p-8 border-t border-[#EBE5D9] bg-[#F9F8F4] hidden">
-                <div class="flex justify-between mb-6 text-xl font-serif"><span>Total</span><span id="cart-total">0 ฿</span></div>
-                <button class="btn-primary w-full py-3 text-sm uppercase tracking-widest">Proceed to Checkout</button>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-8 bg-[#FAFAFA]"></div>
+            <div id="cart-footer" class="p-8 border-t border-[#EAEAEA] bg-white hidden">
+                <div class="flex justify-between mb-8 text-xl font-serif"><span>Total</span><span id="cart-total">0 ฿</span></div>
+                <button class="btn-primary w-full py-4 text-xs">Proceed to Checkout</button>
             </div>
-            <div id="cart-empty-msg" class="text-center text-[#B4AEA4] mt-20 font-light hidden">Your bag is empty.</div>
+            <div id="cart-empty-msg" class="text-center text-[#888] mt-32 font-light hidden text-sm">Your bag is currently empty.</div>
         </div>
     </div>
 
     <!-- Main Content -->
     <main class="flex-grow">
         
+        <!-- LOGIN PAGE (Default) -->
+        <section id="login-page" class="page-section active">
+             <div class="flex items-center justify-center min-h-[100vh] px-4 relative overflow-hidden animate-enter bg-white">
+                
+                <div class="w-full max-w-md bg-white p-10 md:p-14 relative z-10 border border-[#EAEAEA]">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl text-[#1A1A1A] mb-4 font-serif uppercase tracking-widest">Login</h2>
+                        <div class="w-8 h-[1px] bg-black mx-auto mb-6"></div>
+                        <p class="text-[#888] text-[10px] uppercase tracking-[0.2em] font-sans">Access your account</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <input type="text" id="username" class="w-full bg-transparent border-b border-[#EAEAEA] py-3 focus:outline-none focus:border-black transition-colors text-sm font-sans placeholder-gray-300" placeholder="Username (Try 'admin')">
+                            <p id="error-username" class="error-msg">Please enter your username</p>
+                        </div>
+                        <div>
+                            <input type="password" id="password" class="w-full bg-transparent border-b border-[#EAEAEA] py-3 focus:outline-none focus:border-black transition-colors text-sm font-sans placeholder-gray-300" placeholder="Password (Try 'admin')">
+                            <p id="error-password" class="error-msg">Please enter your password</p>
+                        </div>
+                        <button onclick="app.login()" class="btn-primary w-full mt-8 py-4 text-xs">Sign In</button>
+                        <div class="text-center mt-8">
+                            <a href="#" class="text-[10px] text-[#888] uppercase tracking-widest hover:text-black border-b border-transparent hover:border-black transition-all">Forgot Password?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- HOME PAGE -->
-        <section id="home-page" class="page-section active animate-enter">
-            <header class="relative h-[70vh] bg-[#EBE5D9] flex items-center justify-center overflow-hidden mb-16">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80')] bg-cover bg-center opacity-40 grayscale mix-blend-multiply"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#F9F8F4] to-transparent opacity-50"></div>
+        <section id="home-page" class="page-section">
+            <header class="relative h-[80vh] bg-[#F5F5F5] flex items-center justify-center overflow-hidden mb-20">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80')] bg-cover bg-center opacity-30 grayscale"></div>
                 <div class="relative text-center z-10 px-4 animate-enter" style="animation-delay: 0.1s;">
-                    <p class="text-xs tracking-[0.6em] text-[#1A1A1A] mb-6 uppercase font-bold">New Arrival</p>
-                    <h1 class="text-6xl md:text-8xl font-bold mb-8 text-[#1A1A1A]">URBAN<br/><span class="italic font-light font-serif">ELEGANCE</span></h1>
-                    <button onclick="document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })" class="btn-primary px-8 py-3 text-sm uppercase tracking-widest">Explore Collection</button>
+                    <p class="text-[10px] tracking-[0.4em] text-[#1A1A1A] mb-6 uppercase font-sans">The New Standard</p>
+                    <h1 class="text-6xl md:text-8xl font-bold mb-10 text-[#1A1A1A] font-serif uppercase tracking-widest">Urban<br/><span class="italic font-light">Elegance</span></h1>
+                    <button onclick="document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })" class="bg-transparent text-black border-b border-black pb-1 text-[11px] uppercase tracking-[0.2em] hover:text-[#888] hover:border-[#888] transition-all font-sans">Discover the collection</button>
                 </div>
             </header>
 
-            <div id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 flex flex-col md:flex-row justify-between items-center gap-6">
-                <h2 class="text-2xl italic text-[#1A1A1A] font-serif">Selected Items</h2>
-                <div class="relative w-full md:w-72">
-                    <input type="text" id="search-input" placeholder="Search..." oninput="app.handleSearch(this.value)" class="w-full bg-transparent border-b border-[#B4AEA4] py-2 pl-2 pr-8 focus:outline-none focus:border-[#1A1A1A] font-sans text-sm transition-colors">
-                    <i data-lucide="search" class="absolute right-0 top-2 text-[#B4AEA4]" width="16"></i>
+            <div id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+                <h2 class="text-2xl text-[#1A1A1A] font-serif uppercase tracking-widest">Curated Pieces</h2>
+                <div class="relative w-full md:w-64">
+                    <input type="text" id="search-input" placeholder="Search..." oninput="app.handleSearch(this.value)" class="w-full bg-transparent border-b border-[#EAEAEA] py-2 pl-2 pr-8 focus:outline-none focus:border-black font-sans text-xs transition-colors">
+                    <i data-lucide="search" class="absolute right-0 top-2 text-[#888]" width="14"></i>
                 </div>
             </div>
 
-            <div id="product-grid" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mb-20"></div>
-            <div id="no-results" class="hidden text-center py-20 text-[#B4AEA4] font-light italic">No products found.</div>
+            <div id="product-grid" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 mb-32"></div>
+            <div id="no-results" class="hidden text-center py-32 text-[#888] font-light text-sm">No pieces found matching your criteria.</div>
         </section>
 
-        <!-- PRODUCT DETAIL PAGE (With Swipe) -->
+        <!-- PRODUCT DETAIL PAGE -->
         <section id="product-page" class="page-section">
-            <div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-                <button onclick="app.showPage('home')" class="mb-8 text-xs uppercase tracking-widest flex items-center text-[#B4AEA4] hover:text-[#1A1A1A] transition-colors">
-                    <i data-lucide="arrow-right" class="rotate-180 mr-2" width="16"></i> Back to Collection
+            <div class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+                <button onclick="app.showPage('home')" class="mb-12 text-[10px] uppercase tracking-[0.2em] flex items-center text-[#888] hover:text-[#1A1A1A] transition-colors font-sans">
+                    <i data-lucide="arrow-left" class="mr-3" width="14" stroke-width="1.5"></i> Back to Curated Pieces
                 </button>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    <!-- Swipeable Image Gallery -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
                     <div class="space-y-6 animate-enter" style="animation-delay: 0.1s;">
-                        <div class="aspect-[3/4] bg-[#F5F5F0] overflow-hidden relative shadow-inner group">
-                            <!-- Touch Event Container -->
+                        <div class="aspect-[3/4] bg-[#F9F9F9] overflow-hidden relative group">
                             <div class="gallery-container w-full h-full" id="swipe-area">
-                                <div class="gallery-track w-full h-full" id="gallery-track">
-                                    <!-- Images will be injected here -->
-                                </div>
+                                <div class="gallery-track w-full h-full" id="gallery-track"></div>
                             </div>
+                            <!-- Minimal Arrows -->
+                            <button onclick="app.prevImage()" class="absolute left-6 top-1/2 -translate-y-1/2 text-black/50 hover:text-black transition-colors opacity-0 group-hover:opacity-100"><i data-lucide="chevron-left" stroke-width="1"></i></button>
+                            <button onclick="app.nextImage()" class="absolute right-6 top-1/2 -translate-y-1/2 text-black/50 hover:text-black transition-colors opacity-0 group-hover:opacity-100"><i data-lucide="chevron-right" stroke-width="1"></i></button>
                             
-                            <!-- Desktop Navigation Arrows (Optional, visible on hover) -->
-                            <button onclick="app.prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"><i data-lucide="chevron-left"></i></button>
-                            <button onclick="app.nextImage()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"><i data-lucide="chevron-right"></i></button>
-
-                            <!-- Dots -->
-                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 bg-white/50 backdrop-blur px-4 py-2 rounded-full z-10">
-                                <button onclick="app.goToImage(0)" class="w-2 h-2 rounded-full bg-[#1A1A1A] dot active" id="dot-0"></button>
-                                <button onclick="app.goToImage(1)" class="w-2 h-2 rounded-full bg-[#B4AEA4] dot" id="dot-1"></button>
-                            </div>
-                            
-                            <div class="absolute bottom-20 left-0 right-0 text-center text-[10px] text-[#B4AEA4] uppercase tracking-widest opacity-50 pointer-events-none md:hidden">
-                                Swipe to view back
+                            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-4 z-10">
+                                <button onclick="app.goToImage(0)" class="w-1.5 h-1.5 rounded-full bg-[#1A1A1A] dot active" id="dot-0"></button>
+                                <button onclick="app.goToImage(1)" class="w-1.5 h-1.5 rounded-full bg-[#CCC] dot" id="dot-1"></button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Info -->
                     <div class="flex flex-col justify-center animate-enter" style="animation-delay: 0.2s;">
-                        <span class="text-[#C5A059] tracking-[0.2em] uppercase text-xs font-bold mb-2">Vintage Collection</span>
-                        <h1 id="detail-name" class="text-4xl lg:text-5xl mb-2 text-[#1A1A1A] leading-tight font-serif"></h1>
-                        <div class="flex items-center space-x-4 mb-6 border-b border-[#EBE5D9] pb-4">
-                            <p id="detail-price" class="font-serif text-3xl text-[#1A1A1A]"></p>
-                        </div>
-                        <p id="detail-desc" class="text-[#555] leading-loose mb-10 font-light text-base"></p>
-
-                        <!-- Tabs -->
-                        <div class="mb-10">
-                            <div class="flex space-x-8 border-b border-[#EBE5D9] mb-6">
-                                <button onclick="app.switchTab('details')" id="tab-details" class="pb-3 text-xs uppercase tracking-[0.15em] transition-all border-b-2 border-[#1A1A1A] font-bold">Details</button>
-                                <button onclick="app.switchTab('size')" id="tab-size" class="pb-3 text-xs uppercase tracking-[0.15em] transition-all border-transparent text-[#B4AEA4]">Size Chart</button>
-                            </div>
-                            <div id="tab-content" class="min-h-[120px] text-sm text-[#555] font-light leading-relaxed"></div>
-                        </div>
-
-                        <!-- Selectors -->
+                        <h1 id="detail-name" class="text-4xl lg:text-5xl mb-6 text-[#1A1A1A] leading-tight font-serif uppercase tracking-widest font-bold"></h1>
                         <div class="mb-8">
-                            <label class="block text-xs uppercase tracking-widest mb-3 text-[#1A1A1A] font-bold">Select Size</label>
-                            <div id="size-selector" class="flex flex-wrap gap-3"></div>
+                            <p id="detail-price" class="font-sans text-xl font-light text-[#1A1A1A] tracking-wider"></p>
+                        </div>
+                        
+                        <div class="w-full h-[1px] bg-[#EAEAEA] mb-8"></div>
+                        
+                        <p id="detail-desc" class="product-desc mb-12 text-sm text-[#555]"></p>
+
+                        <div class="mb-10">
+                            <div class="flex space-x-10 border-b border-[#EAEAEA] mb-8">
+                                <button onclick="app.switchTab('details')" id="tab-details" class="pb-4 text-[11px] uppercase tracking-[0.15em] transition-all border-b border-[#1A1A1A] text-[#1A1A1A] font-medium font-sans">Details</button>
+                                <button onclick="app.switchTab('size')" id="tab-size" class="pb-4 text-[11px] uppercase tracking-[0.15em] transition-all border-transparent text-[#888] hover:text-[#1A1A1A] font-sans">Dimensions</button>
+                            </div>
+                            <div id="tab-content" class="min-h-[120px] text-sm text-[#555] font-light leading-loose font-sans"></div>
                         </div>
 
-                        <div class="flex items-center space-x-4 mb-8">
-                            <div class="flex items-center border border-[#EBE5D9] h-14 w-32 bg-white">
-                                <button onclick="app.updateDetailQty(-1)" class="w-10 h-full hover:bg-[#F5F5F0] transition">-</button>
-                                <div id="detail-qty" class="flex-1 text-center font-serif text-lg">1</div>
-                                <button onclick="app.updateDetailQty(1)" class="w-10 h-full hover:bg-[#F5F5F0] transition">+</button>
+                        <div class="mb-10">
+                            <label class="block text-[10px] uppercase tracking-[0.2em] mb-4 text-[#1A1A1A] font-sans">Size</label>
+                            <div id="size-selector" class="flex flex-wrap gap-4"></div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center gap-4 mb-8">
+                            <div class="flex items-center border border-[#EAEAEA] h-14 w-full sm:w-32 bg-transparent font-sans">
+                                <button onclick="app.updateDetailQty(-1)" class="w-10 h-full hover:bg-[#F9F9F9] transition text-xl font-light">-</button>
+                                <div id="detail-qty" class="flex-1 text-center text-sm">1</div>
+                                <button onclick="app.updateDetailQty(1)" class="w-10 h-full hover:bg-[#F9F9F9] transition text-xl font-light">+</button>
                             </div>
-                            <button onclick="app.addCurrentToCart()" id="detail-add-btn" class="btn-add btn-primary flex-1 h-14 text-sm tracking-widest">
-                                Add to Cart
+                            <button onclick="app.addCurrentToCart()" id="detail-add-btn" class="btn-add btn-primary flex-1 h-14 w-full text-[11px]">
+                                Add to Bag
                             </button>
                         </div>
                     </div>
@@ -325,121 +327,93 @@
             </div>
         </section>
 
-        <!-- LOGIN & ADMIN PAGES (Same as before) -->
-        <section id="login-page" class="page-section">
-             <div class="flex items-center justify-center min-h-[70vh] px-4 relative overflow-hidden animate-enter">
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#EBE5D9] rounded-full opacity-20 blur-3xl z-0 pointer-events-none"></div>
-                <div class="w-full max-w-md bg-white p-10 shadow-2xl z-10 relative border border-[#EBE5D9]">
-                    <div class="text-center mb-10">
-                        <h2 class="text-4xl text-[#1A1A1A] mb-2 font-serif">Member Login</h2>
-                        <div class="w-12 h-[2px] bg-[#C5A059] mx-auto mb-4"></div>
-                        <p class="text-[#B4AEA4] text-xs uppercase tracking-[0.2em]">Enter your credentials</p>
-                    </div>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-[10px] uppercase tracking-widest mb-2 text-[#555]">Username</label>
-                            <input type="text" id="username" class="w-full bg-[#F9F8F4] border-b border-[#EBE5D9] p-3 focus:outline-none focus:border-[#C5A059] transition-colors text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] uppercase tracking-widest mb-2 text-[#555]">Password</label>
-                            <input type="password" id="password" class="w-full bg-[#F9F8F4] border-b border-[#EBE5D9] p-3 focus:outline-none focus:border-[#C5A059] transition-colors text-sm">
-                        </div>
-                        <button onclick="app.login()" class="btn-primary w-full mt-4 h-12 shadow-md">Sign In</button>
-                        <div class="text-center mt-6"><p class="text-xs text-[#B4AEA4]">Demo: <span class="text-[#1A1A1A] font-semibold">admin / admin</span></p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        <!-- ADMIN PAGE -->
         <section id="admin-page" class="page-section animate-enter">
-             <div class="max-w-7xl mx-auto px-4 py-12">
-                <h2 class="font-serif text-3xl mb-8">Admin Dashboard</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                     <div class="bg-white p-6 border border-[#EBE5D9] shadow-sm"><h3 class="text-sm uppercase tracking-widest text-[#B4AEA4]">Total Sales</h3><p class="text-3xl font-serif mt-2">124,500 ฿</p></div>
-                     <div class="bg-white p-6 border border-[#EBE5D9] shadow-sm"><h3 class="text-sm uppercase tracking-widest text-[#B4AEA4]">Orders</h3><p class="text-3xl font-serif mt-2">45</p></div>
-                     <div class="bg-white p-6 border border-[#EBE5D9] shadow-sm"><h3 class="text-sm uppercase tracking-widest text-[#B4AEA4]">Stock</h3><p class="text-3xl font-serif mt-2">1,203</p></div>
+             <div class="max-w-7xl mx-auto px-4 py-20">
+                <h2 class="font-serif text-3xl mb-12 uppercase tracking-widest">Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                     <div class="bg-white p-8 border border-[#EAEAEA]"><h3 class="text-[10px] uppercase tracking-[0.2em] text-[#888] font-sans">Total Revenue</h3><p class="text-4xl font-serif mt-4 font-bold">124,500 ฿</p></div>
+                     <div class="bg-white p-8 border border-[#EAEAEA]"><h3 class="text-[10px] uppercase tracking-[0.2em] text-[#888] font-sans">Orders</h3><p class="text-4xl font-serif mt-4 font-bold">45</p></div>
+                     <div class="bg-white p-8 border border-[#EAEAEA]"><h3 class="text-[10px] uppercase tracking-[0.2em] text-[#888] font-sans">Inventory</h3><p class="text-4xl font-serif mt-4 font-bold">1,203</p></div>
                 </div>
-                <div class="bg-white border border-[#EBE5D9] p-8 text-center text-[#B4AEA4]">Product Management Table (Mockup)</div>
+                <div class="bg-[#FAFAFA] border border-[#EAEAEA] p-12 text-center text-[#888] font-sans text-sm font-light">Inventory Management Interface (Preview)</div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#191919] text-[#EBE5D9] pt-16 pb-8 border-t border-[#C5A059]/30">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left mb-12">
+    <footer id="main-footer" class="bg-white text-[#1A1A1A] pt-20 pb-10 border-t border-[#EAEAEA] hidden">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-16 text-center md:text-left mb-16">
             <div>
-                <h4 class="text-2xl tracking-widest mb-6 font-bold font-serif">SATHERLON</h4>
-                <p class="text-[#888] text-sm leading-relaxed max-w-xs mx-auto md:mx-0 font-sans font-light">Redefining urban luxury with minimal aesthetics and premium materials.</p>
+                <h4 class="text-3xl tracking-[0.2em] mb-6 font-bold font-serif uppercase">Satherlon</h4>
+                <p class="text-[#555] text-xs leading-loose max-w-xs mx-auto md:mx-0 font-sans font-light">Elegance in every thread. Redefining modern luxury for the discerning individual.</p>
             </div>
             <div>
-                <h5 class="uppercase tracking-[0.2em] text-[10px] mb-6 text-[#C5A059] font-bold">Customer Care</h5>
-                <ul class="space-y-3 text-sm text-[#AAA] font-sans font-light">
-                    <li class="hover:text-white cursor-pointer transition-colors">Shipping & Returns</li>
-                    <li class="hover:text-white cursor-pointer transition-colors">Contact Us</li>
+                <h5 class="uppercase tracking-[0.2em] text-[10px] mb-8 text-[#1A1A1A] font-bold font-sans">Client Services</h5>
+                <ul class="space-y-4 text-xs text-[#555] font-sans font-light">
+                    <li><a href="#" class="hover:text-black transition-colors">Shipping & Returns</a></li>
+                    <li><a href="#" class="hover:text-black transition-colors">Care Guide</a></li>
+                    <li><a href="#" class="hover:text-black transition-colors">Contact Us</a></li>
                 </ul>
             </div>
             <div>
-                <h5 class="uppercase tracking-[0.2em] text-[10px] mb-6 text-[#C5A059] font-bold">Connect With Us</h5>
-                <div class="flex justify-center md:justify-start space-x-6">
-                    <a href="#" class="hover:text-[#C5A059] transition-colors"><i data-lucide="instagram"></i></a>
-                    <a href="#" class="hover:text-[#C5A059] transition-colors"><i data-lucide="facebook"></i></a>
+                <h5 class="uppercase tracking-[0.2em] text-[10px] mb-8 text-[#1A1A1A] font-bold font-sans">Connect</h5>
+                <div class="flex justify-center md:justify-start space-x-8">
+                    <a href="#" class="text-[#888] hover:text-black transition-colors"><i data-lucide="instagram" stroke-width="1.5"></i></a>
+                    <a href="#" class="text-[#888] hover:text-black transition-colors"><i data-lucide="facebook" stroke-width="1.5"></i></a>
                 </div>
             </div>
         </div>
-        <div class="text-center border-t border-[#333] pt-8 text-[10px] text-[#555] uppercase tracking-widest font-sans">© 2024 Satherlon. All rights reserved.</div>
+        <div class="text-center text-[9px] text-[#888] uppercase tracking-[0.2em] font-sans">© 2024 SATHERLON. All rights reserved.</div>
     </footer>
 
     <!-- JavaScript Logic -->
     <script>
         // --- CONFIG FOR USER ---
-        // ให้นำไฟล์ im1.jpg, im2.jpg มาวางไว้โฟลเดอร์เดียวกับไฟล์นี้ ถ้าต้องการใช้ไฟล์ในเครื่อง
         const IMAGES = {
-            // Placeholder: "https://images.unsplash.com/..."
-            // Your File: "im1.jpg"
-            hoodie_front: "im1.jpg",
-            hoodie_back: "im2.jpg", 
-            
-            tshirt_front: "im3.jpg", 
-            tshirt_back: "im4.jpg" 
+            hoodie_front: "im1.jpg", 
+            hoodie_back: "im1_back.jpg",
+            tshirt_front: "im2.jpg", 
+            tshirt_back: "im2_back.jpg" 
         };
 
         const SIZE_CHART = [
-            { size: 'S', width: 20.08, length: 27.17, sleeve: 33.50 },
-            { size: 'M', width: 22.05, length: 27.95, sleeve: 34.50 },
-            { size: 'L', width: 24.02, length: 29.13, sleeve: 35.50 },
-            { size: 'XL', width: 25.98, length: 29.92, sleeve: 36.50 },
-            { size: '2XL', width: 27.99, length: 31.10, sleeve: 37.50 },
-            { size: '3XL', width: 29.92, length: 31.89, sleeve: 38.50 },
-            { size: '4XL', width: 31.89, length: 33.07, sleeve: 39.50 },
-            { size: '5XL', width: 33.86, length: 33.86, sleeve: 40.50 },
+            { size: 'S', width: 20.08, length: 27.17 },
+            { size: 'M', width: 22.05, length: 27.95 },
+            { size: 'L', width: 24.02, length: 29.13 },
+            { size: 'XL', width: 25.98, length: 29.92 },
+            { size: '2XL', width: 27.99, length: 31.10 },
+            { size: '3XL', width: 29.92, length: 31.89 },
+            { size: '4XL', width: 31.89, length: 33.07 },
+            { size: '5XL', width: 33.86, length: 33.86 },
         ];
 
         const MOCK_PRODUCTS = [
             {
                 id: 1,
-                name: "SATHERLON Minimal Hoodie",
+                name: "Minimal Hoodie",
                 category: "Hoodie",
                 price: 359,
                 description: "Soft, roomy, and quietly bold. The minimalist front text and larger back graphic sit cleanly on a crisp white canvas.",
-                details: ["50/50 cotton-poly medium-heavy fabric", "No side seams", "DTF sleeve prints"],
-                images: [IMAGES.hoodie_front, IMAGES.hoodie_back] // im1.jpg (Front/Back)
+                details: ["50/50 premium cotton-poly blend", "Seamless tubular knit", "DTF sleeve detailing"],
+                images: [IMAGES.hoodie_front, IMAGES.hoodie_back] 
             },
             {
                 id: 2,
-                name: "XAUUSD Gold Edition Tee",
+                name: "Gold Edition Tee",
                 category: "T-Shirt",
                 price: 199,
-                description: "Wearable statement that slips into an urban routine. Features gold coin graphic inspired by trading markets.",
-                details: ["100% Premium Cotton", "Breathable fabric", "Modern streetwise edge print"],
-                images: [IMAGES.tshirt_front, IMAGES.tshirt_back] // im2.jpg (Front/Back)
+                description: "Wearable statement that slips into an urban routine. Features subtle gold coin graphic inspired by global markets.",
+                details: ["100% Egyptian Cotton", "Ultra-breathable weave", "Modern streetwise edge print"],
+                images: [IMAGES.tshirt_front, IMAGES.tshirt_back] 
             },
             {
                 id: 3,
-                name: "Classic Beige Oversized",
+                name: "Classic Oversized",
                 category: "Hoodie",
                 price: 579,
-                description: "Everyday comfort with double-lined hood. Ideal for early mornings and late-night walks.",
-                details: ["Oversized Fit", "Kangaroo pocket", "Ethical cotton sourcing"],
+                description: "Everyday luxury with a double-lined hood. Ideal for early mornings and late-night walks in the city.",
+                details: ["Signature Oversized Fit", "Deep kangaroo pocket", "Ethical cotton sourcing"],
                 images: ["https://images.unsplash.com/photo-1564557287817-3785e38ec1f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1564557287817-3785e38ec1f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"]
             }
         ];
@@ -447,6 +421,7 @@
         // --- APP LOGIC ---
         const app = {
             state: {
+                user: null,
                 cart: [],
                 currentCategory: 'All',
                 searchQuery: '',
@@ -455,31 +430,75 @@
                 detailQty: 1,
                 currentImageIndex: 0,
                 touchStartX: 0,
-                touchEndX: 0
+                touchEndX: 0,
+                modalAccepted: false
             },
 
             init() {
                 this.renderProducts();
                 lucide.createIcons();
                 this.setupSwipe();
+                
+                // Show Welcome Modal on first load
+                setTimeout(() => this.openWelcomeModal(), 300);
+            },
+
+            openWelcomeModal() {
+                const m = document.getElementById('welcome-modal');
+                const c = document.getElementById('welcome-content');
+                m.classList.remove('opacity-0', 'pointer-events-none');
+                c.classList.remove('scale-95');
+                c.classList.add('scale-100');
+            },
+
+            closeWelcomeModal() {
+                const m = document.getElementById('welcome-modal');
+                const c = document.getElementById('welcome-content');
+                m.classList.add('opacity-0', 'pointer-events-none');
+                c.classList.remove('scale-100');
+                c.classList.add('scale-95');
+                
+                // After closing modal, go to login page
+                this.state.modalAccepted = true;
+                this.showPage('login');
             },
 
             showPage(pageId) {
+                // Ensure modal is accepted before showing anything else
+                if(!this.state.modalAccepted && pageId !== 'login') return;
+
                 document.querySelectorAll('.page-section').forEach(el => {
-                    el.classList.remove('active');
-                    el.classList.remove('animate-enter');
+                    el.classList.remove('active', 'animate-enter');
                 });
+                
                 const newPage = document.getElementById(pageId + '-page');
-                newPage.classList.add('active');
-                void newPage.offsetWidth; 
-                newPage.classList.add('animate-enter');
+                if(newPage) {
+                    newPage.classList.add('active');
+                    void newPage.offsetWidth; 
+                    newPage.classList.add('animate-enter');
+                }
+
+                const nav = document.getElementById('main-nav');
+                const footer = document.getElementById('main-footer');
+                
+                if (pageId === 'login') {
+                    nav.classList.add('hidden');
+                    footer.classList.add('hidden');
+                } else {
+                    nav.classList.remove('hidden');
+                    footer.classList.remove('hidden');
+                }
             },
 
             filterCategory(cat) {
                 this.state.currentCategory = cat;
                 document.querySelectorAll('#nav-filters button').forEach(btn => {
-                    btn.classList.remove('active');
-                    if(btn.innerText.includes(cat) || (cat==='All' && btn.innerText==='Shop All')) btn.classList.add('active');
+                    btn.classList.remove('active', 'font-medium');
+                    btn.classList.add('text-[#888]');
+                    if(btn.innerText.includes(cat) || (cat==='All' && btn.innerText==='Shop All')) {
+                        btn.classList.add('active');
+                        btn.classList.remove('text-[#888]');
+                    }
                 });
                 this.renderProducts();
                 this.showPage('home');
@@ -506,20 +525,23 @@
                         card.className = 'group relative bg-transparent overflow-hidden animate-enter';
                         card.style.animationDelay = `${index * 0.1}s`;
                         card.innerHTML = `
-                            <div class="flip-container aspect-[3/4] w-full cursor-pointer" onclick="app.openProduct(${p.id})">
-                                <div class="flip-inner h-full shadow-md group-hover:shadow-xl transition-shadow duration-500" id="flip-${p.id}">
-                                    <div class="flip-front bg-[#F5F5F0]">
-                                        <img src="${p.images[0]}" class="w-full h-full object-cover object-center">
+                            <div class="flip-container aspect-[3/4] w-full cursor-pointer bg-[#F9F9F9]" onclick="app.openProduct(${p.id})">
+                                <div class="flip-inner h-full transition-shadow duration-700" id="flip-${p.id}">
+                                    <div class="flip-front">
+                                        <img src="${p.images[0]}" class="w-full h-full object-cover object-center mix-blend-multiply" onerror="this.src='https://via.placeholder.com/800x1000?text=Satherlon'">
                                     </div>
-                                    <div class="flip-back bg-[#F5F5F0]">
-                                        <img src="${p.images[1]}" class="w-full h-full object-cover object-center">
+                                    <div class="flip-back">
+                                        <img src="${p.images[1] || p.images[0]}" class="w-full h-full object-cover object-center mix-blend-multiply" onerror="this.src='https://via.placeholder.com/800x1000?text=Satherlon'">
                                     </div>
                                 </div>
                             </div>
-                            <div class="pt-6 pb-4 text-center">
-                                <p class="text-[10px] text-[#B4AEA4] uppercase tracking-[0.2em] mb-2 font-bold">${p.category}</p>
-                                <h3 onclick="app.openProduct(${p.id})" class="text-lg text-[#1A1A1A] mb-2 group-hover:text-[#C5A059] transition-colors cursor-pointer font-serif">${p.name}</h3>
-                                <p class="font-sans text-sm font-light text-[#555]">${p.price.toLocaleString()} THB</p>
+                            <button onclick="event.stopPropagation(); app.toggleFlip(${p.id})" class="absolute top-4 right-4 bg-white p-2 rounded-full hover:bg-black hover:text-white transition-all duration-500 shadow-sm z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 text-black">
+                                <i data-lucide="refresh-cw" width="14" stroke-width="1.5"></i>
+                            </button>
+                            <div class="pt-6 text-center">
+                                <p class="text-[9px] text-[#888] uppercase tracking-[0.3em] mb-3 font-sans">${p.category}</p>
+                                <h3 onclick="app.openProduct(${p.id})" class="text-xl text-[#1A1A1A] mb-2 hover:opacity-60 transition-opacity cursor-pointer font-serif font-bold uppercase tracking-wider">${p.name}</h3>
+                                <p class="font-sans text-sm font-light text-[#555]">${p.price.toLocaleString()} ฿</p>
                             </div>
                         `;
                         grid.appendChild(card);
@@ -536,7 +558,7 @@
                 this.state.currentImageIndex = 0;
                 
                 document.getElementById('detail-name').innerText = product.name;
-                document.getElementById('detail-price').innerText = `${product.price.toLocaleString()} THB`;
+                document.getElementById('detail-price').innerText = `${product.price.toLocaleString()} ฿`;
                 document.getElementById('detail-desc').innerText = product.description;
                 
                 this.renderGallery();
@@ -546,12 +568,11 @@
                 this.showPage('product');
             },
 
-            // --- SWIPE GALLERY LOGIC ---
             renderGallery() {
                 const track = document.getElementById('gallery-track');
                 const images = this.state.selectedProduct.images;
                 track.innerHTML = images.map(src => 
-                    `<div class="gallery-item"><img src="${src}" draggable="false"></div>`
+                    `<div class="gallery-item"><img src="${src}" draggable="false" class="mix-blend-multiply" onerror="this.src='https://via.placeholder.com/800x1000?text=Satherlon'"></div>`
                 ).join('');
                 this.updateGalleryTransform();
             },
@@ -559,11 +580,9 @@
             updateGalleryTransform() {
                 const track = document.getElementById('gallery-track');
                 track.style.transform = `translateX(-${this.state.currentImageIndex * 100}%)`;
-                
-                // Update dots
                 document.querySelectorAll('.dot').forEach((dot, idx) => {
-                    if (idx === this.state.currentImageIndex) dot.classList.add('active', 'scale-125', 'bg-[#1A1A1A]');
-                    else dot.classList.remove('active', 'scale-125', 'bg-[#1A1A1A]');
+                    if (idx === this.state.currentImageIndex) dot.classList.add('active', 'scale-150', 'bg-[#1A1A1A]');
+                    else dot.classList.remove('active', 'scale-150', 'bg-[#1A1A1A]');
                 });
             },
 
@@ -588,50 +607,41 @@
 
             setupSwipe() {
                 const area = document.getElementById('swipe-area');
-                area.addEventListener('touchstart', e => {
-                    this.state.touchStartX = e.changedTouches[0].screenX;
+                area.addEventListener('touchstart', e => { this.state.touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+                area.addEventListener('touchend', e => { 
+                    this.state.touchEndX = e.changedTouches[0].screenX; 
+                    this.handleSwipe(); 
                 }, {passive: true});
-
-                area.addEventListener('touchend', e => {
-                    this.state.touchEndX = e.changedTouches[0].screenX;
-                    this.handleSwipe();
-                }, {passive: true});
-
-                // Mouse simulation for desktop
-                area.addEventListener('mousedown', e => {
-                    this.state.touchStartX = e.screenX;
-                });
-                area.addEventListener('mouseup', e => {
-                    this.state.touchEndX = e.screenX;
-                    this.handleSwipe();
+                area.addEventListener('mousedown', e => { this.state.touchStartX = e.screenX; });
+                area.addEventListener('mouseup', e => { 
+                    this.state.touchEndX = e.screenX; 
+                    this.handleSwipe(); 
                 });
             },
 
             handleSwipe() {
                 const threshold = 50;
-                if (this.state.touchEndX < this.state.touchStartX - threshold) {
-                    this.nextImage(); // Swipe Left
-                }
-                if (this.state.touchEndX > this.state.touchStartX + threshold) {
-                    this.prevImage(); // Swipe Right
-                }
+                if (this.state.touchEndX < this.state.touchStartX - threshold) this.nextImage();
+                if (this.state.touchEndX > this.state.touchStartX + threshold) this.prevImage();
             },
 
-            // --- TABS & SIZES ---
             switchTab(tab) {
                 const content = document.getElementById('tab-content');
-                document.getElementById('tab-details').className = (tab==='details' ? "pb-3 text-xs uppercase tracking-[0.15em] transition-all border-b-2 border-[#1A1A1A] font-bold" : "pb-3 text-xs uppercase tracking-[0.15em] transition-all border-transparent text-[#B4AEA4]");
-                document.getElementById('tab-size').className = (tab==='size' ? "pb-3 text-xs uppercase tracking-[0.15em] transition-all border-b-2 border-[#1A1A1A] font-bold" : "pb-3 text-xs uppercase tracking-[0.15em] transition-all border-transparent text-[#B4AEA4]");
+                const tDetails = document.getElementById('tab-details');
+                const tSize = document.getElementById('tab-size');
+                
+                tDetails.className = (tab==='details' ? "pb-4 text-[11px] uppercase tracking-[0.15em] transition-all border-b border-[#1A1A1A] text-[#1A1A1A] font-medium font-sans" : "pb-4 text-[11px] uppercase tracking-[0.15em] transition-all border-transparent text-[#888] hover:text-[#1A1A1A] font-sans");
+                tSize.className = (tab==='size' ? "pb-4 text-[11px] uppercase tracking-[0.15em] transition-all border-b border-[#1A1A1A] text-[#1A1A1A] font-medium font-sans" : "pb-4 text-[11px] uppercase tracking-[0.15em] transition-all border-transparent text-[#888] hover:text-[#1A1A1A] font-sans");
 
-                if (tab === 'details') content.innerHTML = `<ul class="list-disc pl-5 space-y-2 animate-enter">${this.state.selectedProduct.details.map(d => `<li>${d}</li>`).join('')}</ul>`;
-                else content.innerHTML = `<div class="overflow-x-auto animate-enter"><table class="w-full text-xs text-left"><thead class="bg-[#F5F5F0] uppercase"><tr><th class="p-2">Size</th><th class="p-2">W</th><th class="p-2">L</th></tr></thead><tbody>${SIZE_CHART.map(r => `<tr class="border-b"><td class="p-2">${r.size}</td><td class="p-2">${r.width}</td><td class="p-2">${r.length}</td></tr>`).join('')}</tbody></table></div>`;
+                if (tab === 'details') content.innerHTML = `<ul class="list-none space-y-3 animate-enter text-xs">${this.state.selectedProduct.details.map(d => `<li><span class="mr-2">&mdash;</span>${d}</li>`).join('')}</ul>`;
+                else content.innerHTML = `<div class="overflow-x-auto animate-enter"><table class="w-full text-xs text-left"><thead class="border-b border-[#EAEAEA] uppercase text-[10px] tracking-[0.2em] text-[#888]"><tr><th class="py-3 font-normal">Size</th><th class="py-3 font-normal">Width (in)</th><th class="py-3 font-normal">Length (in)</th></tr></thead><tbody>${SIZE_CHART.map(r => `<tr class="border-b border-[#F5F5F5]"><td class="py-3">${r.size}</td><td class="py-3">${r.width}</td><td class="py-3">${r.length}</td></tr>`).join('')}</tbody></table></div>`;
             },
 
             renderSizeButtons() {
                 const container = document.getElementById('size-selector');
                 container.innerHTML = SIZE_CHART.map(s => `
                     <button onclick="app.setSize('${s.size}')" 
-                        class="size-btn w-12 h-12 flex items-center justify-center border font-sans text-sm ${this.state.detailActiveSize === s.size ? 'selected' : 'border-[#EBE5D9] text-[#1A1A1A]'}">
+                        class="size-btn w-12 h-12 flex items-center justify-center border text-xs ${this.state.detailActiveSize === s.size ? 'selected border-black' : 'border-[#EAEAEA] text-[#555] hover:border-black'}">
                         ${s.size}
                     </button>
                 `).join('');
@@ -647,17 +657,13 @@
                 if (newQty >= 1) {
                     this.state.detailQty = newQty;
                     document.getElementById('detail-qty').innerText = newQty;
-                    const total = this.state.selectedProduct.price * newQty;
-                    document.getElementById('detail-add-btn').innerText = `Add to Cart - ${total.toLocaleString()} ฿`;
                 }
             },
 
             addCurrentToCart() {
                 const btn = document.getElementById('detail-add-btn');
-                
-                // Animation Feedback
                 btn.classList.add('added');
-                setTimeout(() => btn.classList.remove('added'), 1500);
+                setTimeout(() => btn.classList.remove('added'), 1200);
 
                 const item = { ...this.state.selectedProduct, size: this.state.detailActiveSize, quantity: this.state.detailQty };
                 const existing = this.state.cart.find(i => i.id === item.id && i.size === item.size);
@@ -665,10 +671,9 @@
                 else this.state.cart.push(item);
                 
                 this.updateCartUI();
-                setTimeout(() => this.toggleCart(true), 300); // Open cart after short delay
+                setTimeout(() => this.toggleCart(true), 400);
             },
 
-            // --- CART & SYSTEM ---
             removeFromCart(index) {
                 this.state.cart.splice(index, 1);
                 this.updateCartUI();
@@ -682,7 +687,7 @@
                     content.classList.remove('translate-x-full');
                 } else {
                     drawer.classList.add('opacity-0');
-                    setTimeout(() => drawer.classList.add('pointer-events-none'), 300);
+                    setTimeout(() => drawer.classList.add('pointer-events-none'), 500);
                     content.classList.add('translate-x-full');
                 }
             },
@@ -711,14 +716,19 @@
                 container.innerHTML = this.state.cart.map((item, idx) => {
                     total += item.price * item.quantity;
                     return `
-                        <div class="flex gap-4 animate-enter" style="animation-delay: ${idx * 0.05}s">
-                            <img src="${item.images[0]}" class="w-20 h-24 object-cover border border-[#EBE5D9]">
-                            <div class="flex-1">
-                                <h3 class="text-sm font-bold font-serif">${item.name}</h3>
-                                <p class="text-xs text-[#B4AEA4] mt-1 font-sans">Size: ${item.size} | Qty: ${item.quantity}</p>
-                                <p class="text-sm mt-2 font-sans font-light">${(item.price * item.quantity).toLocaleString()} ฿</p>
+                        <div class="flex gap-6 animate-enter border-b border-[#F5F5F5] pb-6 last:border-0" style="animation-delay: ${idx * 0.05}s">
+                            <img src="${item.images[0]}" class="w-20 h-28 object-cover bg-[#F9F9F9] mix-blend-multiply">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <h3 class="text-xs font-bold font-serif uppercase tracking-widest">${item.name}</h3>
+                                <p class="text-[10px] text-[#888] mt-2 font-sans uppercase tracking-widest">Size: ${item.size}</p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <p class="text-xs font-sans font-light">${(item.price * item.quantity).toLocaleString()} ฿</p>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="text-xs font-sans text-[#888]">Qty: ${item.quantity}</span>
+                                        <button onclick="app.removeFromCart(${idx})" class="text-[#CCC] hover:text-black transition-colors"><i data-lucide="trash-2" width="14" stroke-width="1.5"></i></button>
+                                    </div>
+                                </div>
                             </div>
-                            <button onclick="app.removeFromCart(${idx})" class="text-[#B4AEA4] hover:text-red-500 self-start"><i data-lucide="x" width="16"></i></button>
                         </div>
                     `;
                 }).join('');
@@ -731,7 +741,7 @@
                     this.state.user = null;
                     document.getElementById('auth-icon').setAttribute('data-lucide', 'user');
                     document.getElementById('admin-btn').classList.add('hidden');
-                    this.showPage('home');
+                    this.showPage('login'); 
                     lucide.createIcons();
                 } else {
                     this.showPage('login');
@@ -739,8 +749,35 @@
             },
 
             login() {
-                const u = document.getElementById('username').value;
-                const p = document.getElementById('password').value;
+                const uInput = document.getElementById('username');
+                const pInput = document.getElementById('password');
+                const uError = document.getElementById('error-username');
+                const pError = document.getElementById('error-password');
+                
+                const u = uInput.value.trim();
+                const p = pInput.value.trim();
+
+                uInput.classList.remove('input-error');
+                pInput.classList.remove('input-error');
+                uError.style.display = 'none';
+                pError.style.display = 'none';
+
+                let hasError = false;
+
+                if (!u) {
+                    uInput.classList.add('input-error');
+                    uError.style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (!p) {
+                    pInput.classList.add('input-error');
+                    pError.style.display = 'block';
+                    hasError = true;
+                }
+
+                if (hasError) return; 
+
                 if (u === 'admin' && p === 'admin') {
                     this.state.user = { role: 'admin' };
                     document.getElementById('admin-btn').classList.remove('hidden');
@@ -752,6 +789,11 @@
                     this.showPage('home');
                 }
                 lucide.createIcons();
+            },
+
+            toggleFlip(id) {
+                const el = document.getElementById(`flip-${id}`);
+                el.classList.toggle('is-flipped');
             }
         };
 
